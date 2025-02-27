@@ -38,17 +38,17 @@ def load_config():
         "prompt-eng/_config",
         "../_config"
     ]
-    
+
     # Find CONFIG
     config_path = None
     for location in config_locations:
         if os.path.exists(location):
             config_path = location
             break
-    
+
     if not config_path:
         raise FileNotFoundError("Configuration file not found in any of the expected locations.")
-    
+
     # Load CONFIG
     with open(config_path, 'r') as f:
         for line in f:
@@ -73,7 +73,7 @@ def create_payload(model, prompt, target="ollama", **kwargs):
     if target == "ollama":
         payload = {
             "model": model,
-            "prompt": prompt, 
+            "prompt": prompt,
             "stream": False,
         }
         if kwargs:
@@ -93,7 +93,7 @@ def create_payload(model, prompt, target="ollama", **kwargs):
         #payload.update({key: value for key, value in kwargs.items()})
         #if kwargs:
         #   payload["options"] = {key: value for key, value in kwargs.items()}
-        
+
     else:
         print(f'!!ERROR!! Unknown target: {target}')
     return payload
@@ -103,7 +103,7 @@ def model_req(payload=None):
     """
     Issue request to the Model Server
     """
-        
+
     # CUT-SHORT Condition
     try:
         load_config()
@@ -144,8 +144,8 @@ def model_req(payload=None):
         elif 'choices' in response_json: ## open-webui
             result = response_json['choices'][0]['message']['content']
         else:
-            result = response_json 
-        
+            result = response_json
+
         return delta, result
     elif response.status_code == 401:
         return -1, f"!!ERROR!! Authentication issue. You need to adjust prompt-eng/config with API_KEY ({url})"
@@ -160,15 +160,26 @@ def model_req(payload=None):
 
 if __name__ == "__main__":
     from _pipeline import create_payload, model_req
-    MESSAGE = "1 + 1"
-    PROMPT = MESSAGE 
+
+    CHAIN_OF_THOUGHT = "In a game of pick-up basketball, a player is shooting consistently well, hitting shots, has great " \
+              "rapport with many people at the gym, and plays active defense, really trying to block shots and force " \
+              "turnovers. These are MVP qualities of a pick-up basketball player." \
+              "In another game of pick-up basketball, another player has scored many baskets, outnumbering the other " \
+              "players by 20 points. However this player does not care about playing defense so the other pick-up " \
+              "players on his team suffer on defense. These are not MVP qualities." \
+              "Now present some example pick-up basketball players that would embody an MVP."
+
+    ZERO_SHOT = "What traits or qualities of a regular player in pick-up basketball at a local gym would define a " \
+                "pick-up basketball MVP?"
+
+    PROMPT = ZERO_SHOT
     payload = create_payload(
-                         target="open-webui",   
-                         model="llama3.2:latest", 
-                         prompt=PROMPT, 
-                         temperature=1.0, 
-                         num_ctx=5555555, 
-                         num_predict=1)
+        target="ollama",
+        model="llama3.2:latest",
+        prompt=PROMPT,
+        temperature=1.0,
+        num_ctx=100,
+        num_predict=100)
 
     time, response = model_req(payload=payload)
     print(response)
