@@ -17,7 +17,7 @@ If you need to know the most valuable player in your basketball group to pick th
   * Trustworthiness - decisions are trusted and respected by your teammates
   * Playing defense - making an effort when playing defense 
 
-* My research aims to utilize generative AI prompt techniques to help in defining requirements for a service to determine an MVP based on recorded players and their player reports with statistics on playing ability and personality on the court. 
+* My research aims to utilize generative AI prompt techniques to help in defining requirements for a service to determine an MVP based on recorded players and their player reports with statistics on playing ability and personality on the court. This will allow players to more easily acknowledge good players to "pick up".
 
 ## Arguments
 
