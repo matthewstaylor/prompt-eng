@@ -2,7 +2,7 @@
 
 # Pick-up Basketball MVP
 
-If you need to know the most valuable player in your basketball group, this service aims to do that through analysis of core concepts of what makes the best player on the court.
+If you need to know the most valuable player in your basketball group to pick them for your team, this service aims to do that through analysis of core concepts of what makes the best player on the court.
 
 * Authors: Matthew Taylor
 * Academic Supervisor: [Dr. Fernando Koch](http://www.fernandokoch.me)
